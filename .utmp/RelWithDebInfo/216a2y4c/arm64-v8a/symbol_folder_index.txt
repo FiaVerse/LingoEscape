@@ -1,0 +1,1 @@
+C:\Users\Fia\Documents\GitHub\LingoEscape\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\216a2y4c\obj\arm64-v8a

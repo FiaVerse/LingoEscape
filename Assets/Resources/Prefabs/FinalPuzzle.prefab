@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: -6155693393754081514}
   - component: {fileID: -882371051735130281}
   m_Layer: 0
-  m_Name: FinalPuzzleActivator
+  m_Name: FinalPuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

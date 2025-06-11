@@ -1,3 +1,4 @@
-cube
-sphere
-cylinder
+bottle
+cat
+heart
+moon

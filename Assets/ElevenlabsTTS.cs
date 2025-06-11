@@ -15,17 +15,34 @@ public class ElevenlabsTTS : MonoBehaviour
     private string apiKey;
 
     public static ElevenlabsTTS Instance { get; private set; }
+
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        // Load API key from Resources
         TextAsset keyFile = Resources.Load<TextAsset>("api_keys");
         if (keyFile != null)
         {
             var parsed = JsonUtility.FromJson<APIKeyContainer>(keyFile.text);
             apiKey = parsed.elevenlabs;
+            Debug.Log("[ElevenLabsTTS] API key loaded.");
         }
         else
         {
-            Debug.LogError("api_keys.json not found in Resources folder.");
+            Debug.LogError("[ElevenLabsTTS] api_keys.json not found in Resources folder.");
+        }
+
+        // Ensure AudioSource exists
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            Debug.LogWarning("[ElevenLabsTTS] No AudioSource assigned — created one automatically.");
         }
     }
 
@@ -38,6 +55,7 @@ public class ElevenlabsTTS : MonoBehaviour
 
     public async void Speak(string text)
     {
+        Debug.Log($"[ElevenLabsTTS] Speak() called with: {text}");
         await GenerateAndPlaySpeech(text);
     }
 
@@ -52,18 +70,22 @@ public class ElevenlabsTTS : MonoBehaviour
 
         try
         {
+            Debug.Log("[ElevenLabsTTS] Sending request to ElevenLabs API...");
             var response = await client.PostAsync(apiUrl + voiceId + "?output_format=mp3_44100_128", content);
+
             if (!response.IsSuccessStatusCode)
             {
-                Debug.LogError($"TTS API call failed: {response.StatusCode}");
+                Debug.LogError($"[ElevenLabsTTS] API call failed: {response.StatusCode}");
                 Debug.LogError(await response.Content.ReadAsStringAsync());
                 return;
             }
 
+            Debug.Log("[ElevenLabsTTS] Audio data received, saving to temp file...");
             byte[] mp3Data = await response.Content.ReadAsByteArrayAsync();
             string tempPath = Path.Combine(Application.persistentDataPath, "tempTTS.mp3");
             File.WriteAllBytes(tempPath, mp3Data);
 
+            Debug.Log($"[ElevenLabsTTS] Loading audio clip from file: {tempPath}");
             using UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + tempPath, AudioType.MPEG);
             var asyncOp = www.SendWebRequest();
 
@@ -72,17 +94,26 @@ public class ElevenlabsTTS : MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Failed to load audio clip: " + www.error);
+                Debug.LogError("[ElevenLabsTTS] Failed to load audio clip: " + www.error);
                 return;
             }
 
             AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+
+            if (clip == null)
+            {
+                Debug.LogError("[ElevenLabsTTS] Loaded clip is null.");
+                return;
+            }
+
             audioSource.clip = clip;
+            audioSource.volume = 1f; // Ensure it's not muted
+            Debug.Log($"[ElevenLabsTTS] Playing clip: {clip.name}, Duration: {clip.length}s");
             audioSource.Play();
         }
         catch (Exception ex)
         {
-            Debug.LogError("Error generating TTS: " + ex.Message);
+            Debug.LogError("[ElevenLabsTTS] Error generating TTS: " + ex.Message);
         }
     }
 }

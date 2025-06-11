@@ -37,7 +37,7 @@ public class PuzzleWord : MonoBehaviour
         //{
        //     GroqTTS.Instance.Speak(audioPrompt);
        // }
-       if (GroqTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
+       if (ElevenlabsTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
        {
            ElevenlabsTTS.Instance.Speak(audioPrompt);
        }
@@ -53,4 +53,15 @@ public class PuzzleWord : MonoBehaviour
             OnWordValidated?.Invoke(this);
         }
     }
+    
+    public void PlayHint() // add a button or some way for player to play hints if they need them
+    {
+        if (!string.IsNullOrEmpty(audioPrompt) && ElevenlabsTTS.Instance != null)
+        {
+            ElevenlabsTTS.Instance.Speak(audioPrompt);
+        }
+    }
+
+    
+    
 }

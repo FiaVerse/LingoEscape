@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using TMPro;
 
 /// <summary>
 /// An all-in-one component for recording audio from the microphone,
@@ -19,21 +20,18 @@ public class WhisperSTT : MonoBehaviour
     [Tooltip("Maximum recording duration in seconds.")]
     public int recordingDuration = 5;
 
+    [Header("UI")]
+    public TextMeshProUGUI transcriptionOutput;
+
     private bool isRecording = false;
     private string tempWavFilePath;
 
-    // --- Data structures for API calls ---
     private class TranscriptionResponse { public string text; }
     [System.Serializable] private class APIKeyContainer { public string groq; }
 
-    /// <summary>
-    /// Called once when the script instance is being loaded.
-    /// We use it to securely load the API key and set up file paths.
-    /// </summary>
     private void Awake()
     {
         LoadAPIKey();
-        // Define a consistent path for our temporary recording file.
         tempWavFilePath = Path.Combine(Application.persistentDataPath, "temp_recording.wav");
     }
 
@@ -51,11 +49,6 @@ public class WhisperSTT : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// The main public method to start the entire process.
-    /// It records audio for a set duration, then starts transcription.
-    /// </summary>
-    /// <param name="onTranscriptionComplete">The callback action to invoke with the resulting text.</param>
     public void StartRecordingAndTranscription(System.Action<string> onTranscriptionComplete)
     {
         if (isRecording)
@@ -69,22 +62,15 @@ public class WhisperSTT : MonoBehaviour
     private IEnumerator RecordingAndTranscriptionCoroutine(System.Action<string> onTranscriptionComplete)
     {
         isRecording = true;
-        Debug.Log("WhisperSTT: Starting recording...");
 
-        // Start recording from the default microphone.
+        if (transcriptionOutput) transcriptionOutput.text = "Listening...";
+
         AudioClip recordingClip = Microphone.Start(null, false, recordingDuration, 44100);
         yield return new WaitForSeconds(recordingDuration);
         Microphone.End(null);
 
-        Debug.Log("WhisperSTT: Recording finished. Saving to .wav file using SavWav...");
-
-        // Use the SavWav utility to save the AudioClip to our temporary file path.
-        // The 'true' returned by Save isn't used here, but the function creates the file.
         SavWav.Save(tempWavFilePath, recordingClip);
-        
-        Debug.Log("WhisperSTT: .wav file saved at: " + tempWavFilePath);
-        
-        // Start the transcription process using the saved file.
+
         yield return TranscribeCoroutine(tempWavFilePath, onTranscriptionComplete);
 
         isRecording = false;
@@ -96,6 +82,7 @@ public class WhisperSTT : MonoBehaviour
         {
             Debug.LogError("WhisperSTT: API Key is not loaded. Aborting transcription.");
             onResult?.Invoke(null);
+            if (transcriptionOutput) transcriptionOutput.text = "API key missing.";
             yield break;
         }
 
@@ -112,6 +99,7 @@ public class WhisperSTT : MonoBehaviour
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("WhisperSTT Transcription failed: " + request.error + " - " + request.downloadHandler.text);
+                if (transcriptionOutput) transcriptionOutput.text = "Transcription failed.";
                 onResult?.Invoke(null);
             }
             else
@@ -119,11 +107,13 @@ public class WhisperSTT : MonoBehaviour
                 try
                 {
                     var response = JsonConvert.DeserializeObject<TranscriptionResponse>(request.downloadHandler.text);
+                    if (transcriptionOutput) transcriptionOutput.text = response.text;
                     onResult?.Invoke(response.text);
                 }
                 catch (System.Exception ex)
                 {
                     Debug.LogError("WhisperSTT: Failed to parse transcription JSON: " + ex.Message);
+                    if (transcriptionOutput) transcriptionOutput.text = "Parsing error.";
                     onResult?.Invoke(null);
                 }
             }

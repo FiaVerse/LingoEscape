@@ -7,8 +7,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     [Header("UI References")]
-    public GameObject wordPopupPanel; // The parent panel of your text
-    public TMP_Text wordPopupText;   // The text element itself
+    public GameObject wordPopupPanel; 
+    public TMP_Text wordPopupText;   
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         wordPopupPanel.SetActive(true);
     }
 
-    // We can add a function to hide it later if needed.
+    
     public void HideWordPopup()
     {
         if (wordPopupPanel == null) return;

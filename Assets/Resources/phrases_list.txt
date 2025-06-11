@@ -1,14 +1,12 @@
 # A1
 Bonne nuit
 Ça va
-Pas encore
 Bonne chance
-Bonne nuit
 Très bien
 Merci beaucoup
 Au revoir
 Je m'appelle
-Je parle
+Je parle anglais
 J’aime ça
 
 # B1

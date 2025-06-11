@@ -5,25 +5,37 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;               // for File.ReadAllText if you prefer non-Resources
 
 public class PuzzleGenerator : MonoBehaviour
 {
+    // ---------------------------  Inspector  ---------------------------
+    [Header("LLM Parameters")]
+    [Tooltip("Target language, e.g. \"French\" or \"English\"")]
+    public string playerLanguage = "French";
+
+    [Tooltip("CEFR level, e.g. \"A1\", \"A2\", \"B1\", \"B2\"")]
+    public string playerLevel = "A1";
+    // -------------------------------------------------------------------
+
     private string groqApiKey;
-    private string groqEndpoint = "https://api.groq.com/openai/v1/chat/completions";
-    public PuzzleManager puzzleManager; // Assign this in the Inspector
+    private const string groqEndpoint = "https://api.groq.com/openai/v1/chat/completions";
+    public PuzzleManager puzzleManager;           // assign in Inspector
 
-    // --- Data Structures (unchanged) ---
-    private class GroqRequest { public string model; public List<Message> messages; public int max_tokens; public ResponseFormat response_format; }
-    private class ResponseFormat { public string type; } 
-    private class Message { public string role; public string content; }
+    // ---------- Internal request/response structures ----------
+    private class GroqRequest  { public string model; public List<Message> messages; public int max_tokens; public ResponseFormat response_format; }
+    private class ResponseFormat { public string type; }
+    private class Message      { public string role;  public string content; }
     private class GroqResponse { public List<Choice> choices; }
-    private class Choice { public Message message; }
+    private class Choice       { public Message message; }
+    // -----------------------------------------------------------
 
-    // --- NEW: Public property for definitive prefab names ---
     public HashSet<string> definitivePrefabNames { get; private set; } = new HashSet<string>();
 
+    // ---------------------------  Awake  ---------------------------
     void Awake()
     {
+        // Load API key
         TextAsset keyFile = Resources.Load<TextAsset>("api_keys");
         if (keyFile != null)
         {
@@ -32,172 +44,113 @@ public class PuzzleGenerator : MonoBehaviour
         }
         else
         {
-            Debug.LogError("API Key file 'api_keys.json' not found in Resources folder. Please create it with a 'groq' field.");
+            Debug.LogError("api_keys.json not found in Resources!");
         }
-        
-        LoadDefinitivePrefabList(); // Load your list from the text file
-    }
 
-    [System.Serializable]
-    public class APIKeyContainer { public string groq; }
+        LoadDefinitivePrefabList();
+    }
+    [System.Serializable] public class APIKeyContainer { public string groq; }
+    // ------------------------------------------------------------------
 
     private void LoadDefinitivePrefabList()
     {
-        GameObject[] loadedPrefabs = Resources.LoadAll<GameObject>("Prefabs");
-
-        if (loadedPrefabs.Length == 0)
-        {
-            Debug.LogError("No prefabs found in Resources/Prefabs. Make sure your prefabs are in the right folder.");
-            return;
-        }
-
-        foreach (GameObject prefab in loadedPrefabs)
-        {
-            string fullPath = $"Prefabs/{prefab.name}";
-            definitivePrefabNames.Add(fullPath);
-            Debug.Log($"Loaded prefab from Resources: {fullPath}");
-        }
+        var loadedPrefabs = Resources.LoadAll<GameObject>("Prefabs");
+        foreach (var p in loadedPrefabs)
+            definitivePrefabNames.Add($"Prefabs/{p.name}");
     }
 
+    // ---------------------------  PUBLIC entry  -----------------------
+    public void StartPuzzleGeneration() => StartCoroutine(GeneratePuzzlesCoroutine());
+    // ------------------------------------------------------------------
 
-
-    public void StartPuzzleGeneration()
-    {
-        StartCoroutine(GeneratePuzzlesCoroutine());
-    }
-
+    // ---------------------------  Coroutine  ---------------------------
     private IEnumerator GeneratePuzzlesCoroutine()
     {
-        Debug.Log("GeneratePuzzles Coroutine started.");
+        if (definitivePrefabNames.Count == 0) { Debug.LogError("No prefabs!"); yield break; }
 
-        if (puzzleManager == null) { Debug.LogError("PuzzleGenerator: PuzzleManager is not assigned!"); yield break; }
-        if (string.IsNullOrEmpty(groqApiKey) || groqApiKey == "Bearer ") { Debug.LogError("PuzzleGenerator: API Key is missing or invalid!"); yield break; }
-        if (definitivePrefabNames.Count == 0) { Debug.LogError("PuzzleGenerator: Definitive prefab list is empty. Cannot generate puzzles."); yield break; }
-
-
-        // --- Load prompt template ---
-        TextAsset promptTemplateAsset = Resources.Load<TextAsset>("LLMPromptTemplate"); 
-        if (promptTemplateAsset == null)
+        // 1) ------ Build parameterised prompt ------
+        //   a) partCount switch
+        int partCount = playerLevel switch
         {
-            Debug.LogError("File Error: Could not load 'LLMPromptTemplate.txt' from Resources folder. Please ensure it exists.");
-            yield break;
-        }
-//
-      
-        // --- Build the flat prefab list string for the LLM prompt ---
-        string prefabsForLLMPrompt = "Prefabs: " + string.Join(", ", definitivePrefabNames);
-
-        
-        //
-        
-        Debug.Log("Prefabs list generated for LLM from definitive list: " + prefabsForLLMPrompt); 
-
-        // --- Format the final prompt with the dynamically generated prefabs JSON ---
-        string promptTemplate = promptTemplateAsset.text;
-        string finalPrompt = promptTemplate.Replace("{0}", prefabsForLLMPrompt);
-
-        
-        Debug.Log("Prompt prepared. Building web request...");
-
-        // --- Building the web request using UnityWebRequest ---
-        var requestData = new GroqRequest
-        {
-            model = "llama3-8b-8192", 
-            messages = new List<Message> { new Message { role = "user", content = finalPrompt } },
-            max_tokens = 500, 
-            response_format = new ResponseFormat { type = "json_object" }
+            "A1" => 2,
+            "A2" => 3,
+            "B1" => 4,
+            _    => 5        // B2 or higher
         };
 
-        string jsonPayload = JsonConvert.SerializeObject(requestData);
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonPayload);
+        //   b) Prefab list
+        string prefabLine = "Prefabs: " + string.Join(", ", definitivePrefabNames);
 
-        using (UnityWebRequest request = new UnityWebRequest(groqEndpoint, "POST"))
+        //   c) Load template
+        TextAsset templateAsset = Resources.Load<TextAsset>("LLMPromptTemplate");   // make sure the txt file is in Resources
+        if (templateAsset == null) { Debug.LogError("LLMPromptTemplate.txt not found in Resources"); yield break; }
+        string promptTemplate = templateAsset.text;
+
+        //   d) Replace placeholders
+        string finalPrompt = promptTemplate
+            .Replace("{language}",   playerLanguage)
+            .Replace("{level}",      playerLevel)
+            .Replace("{word_count}", partCount.ToString())
+            .Replace("{0}",          prefabLine);
+
+        // 2) ------ Prepare Groq request ------
+        var requestData = new GroqRequest
         {
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Authorization", groqApiKey);
+            model = "llama3-8b-8192",
+            max_tokens = 500,
+            response_format = new ResponseFormat { type = "json_object" },
+            messages = new List<Message> { new Message { role = "user", content = finalPrompt } }
+        };
 
-            Debug.Log("Making API call to Groq...");
-            yield return request.SendWebRequest(); 
+        // 3) ------ Send request ------
+        byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(requestData));
+        using UnityWebRequest req = new UnityWebRequest(groqEndpoint, "POST")
+        {
+            uploadHandler   = new UploadHandlerRaw(body),
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+        req.SetRequestHeader("Content-Type", "application/json");
+        req.SetRequestHeader("Authorization", groqApiKey);
 
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"API call failed: {request.error} - Response: {request.downloadHandler.text}");
-            }
-            else
-            {
-                Debug.Log("API call successful. Parsing response...");
-                string result = request.downloadHandler.text;
-                try
-                {
-                    var groqResponse = JsonConvert.DeserializeObject<GroqResponse>(result);
-                    string puzzleJson = groqResponse?.choices?[0]?.message?.content;
-                    Debug.Log("[LLM Raw Puzzle JSON] " + puzzleJson);
+        yield return req.SendWebRequest();
 
-                    if (!string.IsNullOrEmpty(puzzleJson))
-                    {
-                        Debug.Log("Successfully received puzzle JSON from LLM. Validating prefab paths...");
-                        // --- Validate the AI's chosen prefabs against the definitive list ---
-                        if (ValidatePuzzleJson(puzzleJson, definitivePrefabNames))
-                        {
-                             puzzleManager.CachePuzzlesFromResponse(puzzleJson);
-                             puzzleManager.StartPuzzleSequence();
-                        }
-                        else
-                        {
-                            Debug.LogError("AI generated invalid prefab paths. Puzzle cannot be generated. Please adjust prompt or prefab list.");
-                            // We don't call puzzleManager.CachePuzzlesFromResponse here
-                            // This means the game won't proceed with a broken puzzle
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("API returned an empty or null content field in the response.");
-                    }
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogError($"Failed to parse JSON response from LLM: {e.Message}. Raw response: {result}");
-                }
-            }
+        if (req.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Groq error: {req.error}\n{req.downloadHandler.text}");
+            yield break;
+        }
+
+        // 4) ------ Parse & validate ------
+        var groqResp = JsonConvert.DeserializeObject<GroqResponse>(req.downloadHandler.text);
+        string puzzleJson = groqResp?.choices?[0]?.message?.content;
+        Debug.Log("[LLM Raw Puzzle JSON] " + puzzleJson);
+
+        if (ValidatePuzzleJson(puzzleJson, definitivePrefabNames))
+        {
+            puzzleManager.CachePuzzlesFromResponse(puzzleJson);
+            puzzleManager.StartPuzzleSequence();
         }
     }
+    // ------------------------------------------------------------------
 
-    /// <summary>
-    /// Validates that all prefab paths chosen by the LLM in the generated JSON are in the definitive list.
-    /// It does NOT correct them; it only checks.
-    /// </summary>
-    /// <param name="puzzleJson">The raw JSON string from the LLM.</param>
-    /// <param name="validPaths">A HashSet of all definitive valid prefab paths (e.g., "Prefabs/moon").</param>
-    /// <returns>True if all chosen prefabs are valid, false otherwise.</returns>
-    private bool ValidatePuzzleJson(string puzzleJson, HashSet<string> validPaths)
+    private bool ValidatePuzzleJson(string json, HashSet<string> valid)
     {
+        if (string.IsNullOrEmpty(json)) return false;
         try
         {
-            JObject puzzleData = JObject.Parse(puzzleJson);
-            JArray puzzleParts = (JArray)puzzleData["puzzle_parts"];
-            bool allValid = true;
-
-            foreach (JObject part in puzzleParts)
+            JObject root = JObject.Parse(json);
+            foreach (var part in root["puzzle_parts"])
             {
-                string chosenPrefabPath = part["prefab"]?.ToString();
-                
-                // If it's the special FinalPuzzleActivator, it's always valid
-                if (chosenPrefabPath == "FinalPuzzleActivator") continue;
-
-                if (!validPaths.Contains(chosenPrefabPath))
+                string path = part["prefab"]?.ToString();
+                if (path == "Prefabs/FinalPuzzle") continue;        // always allowed
+                if (!valid.Contains(path))
                 {
-                    Debug.LogError($"Validation failed: LLM chose invalid prefab path: '{chosenPrefabPath}'. This prefab is not in your 'prefab_list.txt'.");
-                    allValid = false;
+                    Debug.LogError($"Invalid prefab in JSON: {path}");
+                    return false;
                 }
             }
-            return allValid;
+            return true;
         }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Error validating LLM puzzle JSON: {e.Message}. Invalid JSON structure?");
-            return false; 
-        }
+        catch { return false; }
     }
 }

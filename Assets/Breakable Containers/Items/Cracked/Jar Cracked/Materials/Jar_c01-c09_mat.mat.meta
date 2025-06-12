@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 13f7922a5e7fbb746aebafc98eef8f67
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Cracked/Jar Cracked/Materials/Jar_c01-c09_mat.mat
+  uploadId: 659980

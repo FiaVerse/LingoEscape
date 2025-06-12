@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d85c731d9a029ba4988486946d786b94
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Cracked/Clay vase Cracked/Materials/Clay
+    Vase Cracked_mat.mat
+  uploadId: 659980

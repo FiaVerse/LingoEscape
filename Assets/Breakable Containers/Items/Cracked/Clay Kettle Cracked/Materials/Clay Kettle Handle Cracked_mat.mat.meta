@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: cf457497de0a8564198d832738d3a628
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Cracked/Clay Kettle Cracked/Materials/Clay
+    Kettle Handle Cracked_mat.mat
+  uploadId: 659980

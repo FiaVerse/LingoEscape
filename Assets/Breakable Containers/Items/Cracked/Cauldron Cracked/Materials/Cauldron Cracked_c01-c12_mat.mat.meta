@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e6fd6defd277c3941ab0f172781a099e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Cracked/Cauldron Cracked/Materials/Cauldron
+    Cracked_c01-c12_mat.mat
+  uploadId: 659980

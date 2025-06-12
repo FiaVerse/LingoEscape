@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 979ce9adb1c07ad4f8ee06f9fc953e7b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Normal/Clay Vase Cubic/Materials/Clay
+    Vase Cubic_mat.mat
+  uploadId: 659980

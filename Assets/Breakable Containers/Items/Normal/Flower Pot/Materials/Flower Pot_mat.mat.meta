@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 15038c82480b1314481525793e848e74
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Normal/Flower Pot/Materials/Flower
+    Pot_mat.mat
+  uploadId: 659980

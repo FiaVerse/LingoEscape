@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ringing phone
+* source:	https://sketchfab.com/3d-models/ringing-phone-1fc16e07c3f24d808039f25c586e3917
+* author:	Sololopenko (https://sketchfab.com/Sololopenko)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ringing phone" (https://sketchfab.com/3d-models/ringing-phone-1fc16e07c3f24d808039f25c586e3917) by Sololopenko (https://sketchfab.com/Sololopenko) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

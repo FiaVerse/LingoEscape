@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aa388112b144e92459d3f3049cefa621
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Cracked/Jar_BlueRed Cracked/Materials/Jar_BlueRed_c01-c10_mat.mat
+  uploadId: 659980

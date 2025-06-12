@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a5434d642e2127a449427e91535219ee
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280906
+  packageName: Breakable Jars, Vases, Pots
+  packageVersion: 1.0
+  assetPath: Assets/Breakable Containers/Items/Normal/Jar_BrownPurple/Materials/Jar_BrownPurple_mat.mat
+  uploadId: 659980

@@ -6846,6 +6846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfe9011e086a7d488b475a4e959c0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLanguage: French
+  playerLevel: A1
   puzzleManager: {fileID: 537111129}
 --- !u!114 &537111129
 MonoBehaviour:

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3ca34c99030a80343bba2ff129a30fda
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 85098
+  packageName: RunesAndPortals
+  packageVersion: 5.0
+  assetPath: Assets/@PaulosCreations/RunesAndPortals/Effects/Particles/Materials/PartMat_PortalRunes.mat
+  uploadId: 609286

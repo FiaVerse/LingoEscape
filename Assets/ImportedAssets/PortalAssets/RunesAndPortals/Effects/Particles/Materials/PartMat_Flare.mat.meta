@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3a4aa0f42c600f44d9a28f3a1ec8a984
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 85098
+  packageName: RunesAndPortals
+  packageVersion: 5.0
+  assetPath: Assets/@PaulosCreations/RunesAndPortals/Effects/Particles/Materials/PartMat_Flare.mat
+  uploadId: 609286

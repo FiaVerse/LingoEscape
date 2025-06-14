@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ec2f8f58fa5617940aeece1473b1d418
+timeCreated: 1488797480
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 85098
+  packageName: RunesAndPortals
+  packageVersion: 5.0
+  assetPath: Assets/@PaulosCreations/RunesAndPortals/Effects/Particles/Mat_Part_Sparks.mat
+  uploadId: 609286

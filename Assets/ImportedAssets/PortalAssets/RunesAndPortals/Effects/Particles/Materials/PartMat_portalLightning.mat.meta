@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8dd1e7821b2a1da4983d34523cdb347a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 85098
+  packageName: RunesAndPortals
+  packageVersion: 5.0
+  assetPath: Assets/@PaulosCreations/RunesAndPortals/Effects/Particles/Materials/PartMat_portalLightning.mat
+  uploadId: 609286

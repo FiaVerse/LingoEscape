@@ -48,6 +48,7 @@ public class BloomMenu : MonoBehaviour
     /*──────────────────── expand / collapse ────────────────────*/
     IEnumerator Expand()
     {
+        Debug.Log("expanding menu");
         busy = true;  PlayWhoosh();
 
         /* activate children & pre-calc target positions */
@@ -74,6 +75,7 @@ public class BloomMenu : MonoBehaviour
 
     IEnumerator Collapse()
     {
+        Debug.Log("collapsing menu");
         busy = true;  PlayWhoosh();
 
         int n = items.Count;

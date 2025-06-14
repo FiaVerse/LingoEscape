@@ -1,7 +1,7 @@
 using UnityEngine;
 using Oculus.Interaction;
 using UnityEngine.SceneManagement;
-
+// starts game when language, level and voice is selected 
 public class PlayerSelection : MonoBehaviour
 {
     public enum OptionType { Language, Level, Voice }
@@ -11,7 +11,7 @@ public class PlayerSelection : MonoBehaviour
     public string     optionValue = "French";   // e.g. "English", "B2", "kid"
 
     [Header("Scene to Load After All Choices")]
-    public string gameSceneName = "GameScene";
+    public string gameSceneName = "Main Lingo";
 
     // -------------------------------------------------------------
     // This method will be called from the button’s UnityEvent
@@ -30,7 +30,7 @@ public class PlayerSelection : MonoBehaviour
         if (PlayerSettings.IsComplete)
         {
             Debug.Log("[Menu] All selections made – loading game scene.");
-            SceneManager.LoadScene(gameSceneName);
+            SceneManager.LoadScene("MainLingo");
         }
     }
 }

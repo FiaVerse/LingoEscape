@@ -22451,7 +22451,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1508405992}
-  m_PlaneDistance: 30
+  m_PlaneDistance: 8
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -24875,7 +24875,8 @@ MonoBehaviour:
   SeedValue: 0
   PrefabsToSpawn:
   - Labels: 1
-    Prefabs: []
+    Prefabs:
+    - {fileID: 0}
     PrefabSelection: 0
     MatchAspectRatio: 0
     CalculateFacingDirection: 0

@@ -1,18 +1,19 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-    // This makes the manager accessible from any other script.
     public static UIManager Instance { get; private set; }
 
     [Header("UI References")]
     public GameObject wordPopupPanel; 
-    public TMP_Text wordPopupText;   
+    public TMP_Text wordPopupText;
+
+    private Coroutine hideCoroutine;
 
     private void Awake()
     {
-        // This is the singleton pattern.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -25,23 +26,31 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        // Start with the UI hidden.
-        if(wordPopupPanel != null)
+        if (wordPopupPanel != null)
         {
             wordPopupPanel.SetActive(false);
         }
     }
 
-    // Any script can call this function to show a word.
     public void ShowWordPopup(string word)
     {
         if (wordPopupPanel == null || wordPopupText == null) return;
 
         wordPopupText.text = word;
         wordPopupPanel.SetActive(true);
+
+        if (hideCoroutine != null)
+            StopCoroutine(hideCoroutine);
+
+        hideCoroutine = StartCoroutine(ClearWordAfterDelay(2f));
     }
 
-    
+    private IEnumerator ClearWordAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        wordPopupText.text = ""; // Clears the word but keeps panel visible
+    }
+
     public void HideWordPopup()
     {
         if (wordPopupPanel == null) return;

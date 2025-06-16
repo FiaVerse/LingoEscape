@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using TMPro;
+using System.Collections;
 
 public class ElevenlabsTTS : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class ElevenlabsTTS : MonoBehaviour
     private const string apiUrl = "https://api.elevenlabs.io/v1/text-to-speech/";
     [SerializeField] private string voiceId = "your_voice_id_here"; 
     private string apiKey;
+    [SerializeField] private TextMeshProUGUI transcriptionText;
 
     public static ElevenlabsTTS Instance { get; private set; }
 
@@ -56,8 +59,24 @@ public class ElevenlabsTTS : MonoBehaviour
     public async void Speak(string text)
     {
         Debug.Log($"[ElevenLabsTTS] Speak() called with: {text}");
+        // play audio and display transcription then hide it after 2sec
+        if (transcriptionText != null)
+        {
+            transcriptionText.gameObject.SetActive(true);
+            transcriptionText.text = text;
+            StartCoroutine(HideTranscriptionAfterDelay(2f));
+        }
+
         await GenerateAndPlaySpeech(text);
     }
+
+    private IEnumerator HideTranscriptionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (transcriptionText != null)
+            transcriptionText.gameObject.SetActive(false);
+    }
+
 
     public async Task GenerateAndPlaySpeech(string text)
     {

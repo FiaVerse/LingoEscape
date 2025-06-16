@@ -5,19 +5,13 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using TMPro;
 
-/// <summary>
-/// An all-in-one component for recording audio from the microphone,
-/// saving it as a .wav file, and transcribing it using the Whisper API.
-/// </summary>
 public class WhisperSTT : MonoBehaviour
 {
     [Header("API Configuration")]
-    [Tooltip("The API endpoint for the transcription service.")]
     public string whisperEndpoint = "https://api.groq.com/openai/v1/audio/transcriptions";
     private string apiKey;
 
     [Header("Recording Settings")]
-    [Tooltip("Maximum recording duration in seconds.")]
     public int recordingDuration = 5;
 
     [Header("UI")]
@@ -63,7 +57,11 @@ public class WhisperSTT : MonoBehaviour
     {
         isRecording = true;
 
-        if (transcriptionOutput) transcriptionOutput.text = "Listening...";
+        if (transcriptionOutput)
+        {
+            transcriptionOutput.gameObject.SetActive(true);
+            transcriptionOutput.text = "Listening...";
+        }
 
         AudioClip recordingClip = Microphone.Start(null, false, recordingDuration, 44100);
         yield return new WaitForSeconds(recordingDuration);
@@ -82,7 +80,11 @@ public class WhisperSTT : MonoBehaviour
         {
             Debug.LogError("WhisperSTT: API Key is not loaded. Aborting transcription.");
             onResult?.Invoke(null);
-            if (transcriptionOutput) transcriptionOutput.text = "API key missing.";
+            if (transcriptionOutput)
+            {
+                transcriptionOutput.text = "API key missing.";
+                StartCoroutine(HideTranscriptionAfterDelay(2f));
+            }
             yield break;
         }
 
@@ -99,7 +101,11 @@ public class WhisperSTT : MonoBehaviour
             if (request.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("WhisperSTT Transcription failed: " + request.error + " - " + request.downloadHandler.text);
-                if (transcriptionOutput) transcriptionOutput.text = "Transcription failed.";
+                if (transcriptionOutput)
+                {
+                    transcriptionOutput.text = "Transcription failed.";
+                    StartCoroutine(HideTranscriptionAfterDelay(2f));
+                }
                 onResult?.Invoke(null);
             }
             else
@@ -107,16 +113,30 @@ public class WhisperSTT : MonoBehaviour
                 try
                 {
                     var response = JsonConvert.DeserializeObject<TranscriptionResponse>(request.downloadHandler.text);
-                    if (transcriptionOutput) transcriptionOutput.text = response.text;
+                    if (transcriptionOutput)
+                    {
+                        transcriptionOutput.text = response.text;
+                        StartCoroutine(HideTranscriptionAfterDelay(2f));
+                    }
                     onResult?.Invoke(response.text);
                 }
                 catch (System.Exception ex)
                 {
                     Debug.LogError("WhisperSTT: Failed to parse transcription JSON: " + ex.Message);
-                    if (transcriptionOutput) transcriptionOutput.text = "Parsing error.";
+                    if (transcriptionOutput)
+                    {
+                        transcriptionOutput.text = "Parsing error.";
+                        StartCoroutine(HideTranscriptionAfterDelay(2f));
+                    }
                     onResult?.Invoke(null);
                 }
             }
         }
+    }
+
+    private IEnumerator HideTranscriptionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (transcriptionOutput) transcriptionOutput.gameObject.SetActive(false);
     }
 }

@@ -6601,7 +6601,7 @@ GameObject:
   - component: {fileID: 480869271}
   - component: {fileID: 480869270}
   m_Layer: 5
-  m_Name: Hint_Translation
+  m_Name: Translation(not set up)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7104,7 +7104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLanguage: English
-  playerLevel: C1
+  playerLevel: A2
   puzzleManager: {fileID: 537111129}
 --- !u!114 &537111129
 MonoBehaviour:
@@ -9804,6 +9804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 785955890}
   voiceId: flHkNRp1BlvT73UL6gyz
+  transcriptionText: {fileID: 620403018}
 --- !u!4 &785955889
 Transform:
   m_ObjectHideFlags: 0
@@ -11540,8 +11541,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 1508405992}
-  m_PlaneDistance: 1
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -11561,7 +11562,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897099700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.54}
+  m_LocalPosition: {x: 0, y: 0, z: 3.72}
   m_LocalScale: {x: 0.022371365, y: 0.022371365, z: 0.022371365}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11572,8 +11573,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 447, y: 894}
+  m_AnchoredPosition: {x: 3.51, y: 2.4}
+  m_SizeDelta: {x: 447, y: 253.4736}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &898137351
 GameObject:
@@ -21704,7 +21705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -237, y: 499}
+  m_AnchoredPosition: {x: -349, y: 513}
   m_SizeDelta: {x: 89.5149, y: 16.3515}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1877911585
@@ -22687,7 +22688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sttService: {fileID: 22697184}
-  fuzzyMatchThreshold: 1
+  fuzzyMatchThreshold: 0.817
 --- !u!4 &1952107652
 Transform:
   m_ObjectHideFlags: 0

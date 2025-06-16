@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public void StartNewGame()
     {
         Debug.Log("StartNewGame() called! Beginning puzzle generation...");
+        // maybe play a more detailed narration and a tutorial first then generate puzzles
         puzzleGenerator.StartPuzzleGeneration();
 
         //  hide the "Start" button after it's pressed

@@ -30,7 +30,7 @@ Ignore filler words (articles, prepositions).
 **Step 3 – Design the Puzzle**  
 • narrative_intro ≤ 10 words.  
 • Each instruction ≤ 6 words, phrased as a riddle/question.  
-• audio_prompt = optional hint.  
+• audio_prompt = a short hint in {language}.
 • final_prompt ≤ 10 words.  
 • victory_message ≤ 8 words (congratulations).  
 

@@ -31,7 +31,7 @@ public class PuzzleWord : MonoBehaviour
     {
         if (isValidated) return;
         
-        UIManager.Instance.ShowWordPopup(word);
+        
 
        // if (GroqTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
         //{
@@ -49,6 +49,7 @@ public class PuzzleWord : MonoBehaviour
     {
         if (isCorrect && !isValidated)
         {
+            UIManager.Instance.ShowWordPopup(word);
             isValidated = true;
             OnWordValidated?.Invoke(this);
         }

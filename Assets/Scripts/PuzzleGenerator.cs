@@ -20,7 +20,7 @@ public class PuzzleGenerator : MonoBehaviour
 
     private string groqApiKey;
     private const string groqEndpoint = "https://api.groq.com/openai/v1/chat/completions";
-    public PuzzleManager puzzleManager;           // assign in Inspector
+    public PuzzleManager puzzleManager;          
 
     // ---------- Internal request/response structures ----------
     private class GroqRequest  { public string model; public List<Message> messages; public int max_tokens; public ResponseFormat response_format; }
@@ -82,7 +82,7 @@ public class PuzzleGenerator : MonoBehaviour
         string prefabLine = "Prefabs: " + string.Join(", ", definitivePrefabNames);
 
         //   c) Load template
-        TextAsset templateAsset = Resources.Load<TextAsset>("LLMPromptTemplate");   // make sure the txt file is in Resources
+        TextAsset templateAsset = Resources.Load<TextAsset>("LLMPromptTemplate");   // file needs to be in Resources
         if (templateAsset == null) { Debug.LogError("LLMPromptTemplate.txt not found in Resources"); yield break; }
         string promptTemplate = templateAsset.text;
 

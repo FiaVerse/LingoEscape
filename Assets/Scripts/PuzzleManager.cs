@@ -39,9 +39,7 @@ public class PuzzleManager : MonoBehaviour
     private string currentNarrativeIntro;
     private bool   isSceneReady = false;
 
-    /* ---------------------------------------------------------------- */
-    /* Awake                                                            */
-    /* ---------------------------------------------------------------- */
+   
     private void Awake()
     {
         // Ensure AudioSource
@@ -179,7 +177,8 @@ public class PuzzleManager : MonoBehaviour
 
         if (puzzleQueue.Count == 0)
         {
-            elevenLabsTTS?.Speak("Félicitations ! Tu as tout terminé.");
+            //elevenLabsTTS?.Speak("You escaped and learnt xyz");
+            Debug.Log("Player won");
             return;
         }
 

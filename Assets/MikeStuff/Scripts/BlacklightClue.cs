@@ -1,19 +1,37 @@
 // BlacklightClue.cs
+// This script now actively registers itself with the BlacklightController when it's created.
+
 using UnityEngine;
 
-/// <summary>
-/// Represents a clue object that is only visible when the blacklight effect is active.
-/// Place this on the parent GameObject of your hidden message/object.
-/// </summary>
 public class BlacklightClue : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("The actual GameObject with the clue's visuals. This will be enabled/disabled.")]
     private GameObject m_clueObject;
 
+    void OnEnable()
+    {
+        // When this clue object is created and enabled, find the BlacklightController instance
+        // and register this clue with it.
+        if (BlacklightController.Instance != null)
+        {
+            BlacklightController.Instance.RegisterClue(this);
+        }
+    }
+
+    void OnDisable()
+    {
+        // When this clue object is about to be destroyed or disabled, unregister it
+        // from the controller to keep the list clean.
+        if (BlacklightController.Instance != null)
+        {
+            BlacklightController.Instance.UnregisterClue(this);
+        }
+    }
+
     void Awake()
     {
-        // Ensure the clue is hidden by default when the scene starts.
+        // Ensure the clue is hidden by default when it is first created.
         if (m_clueObject != null)
         {
             m_clueObject.SetActive(false);
@@ -25,7 +43,7 @@ public class BlacklightClue : MonoBehaviour
     }
 
     /// <summary>
-    /// Shows or hides the clue. Called by the main BlacklightController.
+    /// Shows or hides the clue. Called by the BlacklightController.
     /// </summary>
     /// <param name="isRevealed">If true, show the clue. Otherwise, hide it.</param>
     public void SetRevealed(bool isRevealed)

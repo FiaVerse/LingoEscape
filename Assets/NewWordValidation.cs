@@ -1,9 +1,9 @@
 using UnityEngine;
 using System;
 
-public class PuzzleWord : MonoBehaviour
+public class NewWordValidation : MonoBehaviour
 {
-    public event Action<PuzzleWord> OnWordValidated;
+    public event Action<NewWordValidation> OnWordValidated;
 
     public string word;
     public string audioPrompt;
@@ -20,12 +20,12 @@ public class PuzzleWord : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
     }
 
-    public void Initialize(string assignedWord, string assignedAudioPrompt, AudioClip clip)
-    {
-        word = assignedWord;
-        audioPrompt = assignedAudioPrompt;
-        wordAudio = clip;
-    }
+    //  public void Initialize(string assignedWord, string assignedAudioPrompt, AudioClip clip)
+    //   {
+    //       word = assignedWord;
+    //      audioPrompt = assignedAudioPrompt;
+    //       wordAudio = clip;
+    //  }
 
     public void Interact()
     {
@@ -33,23 +33,23 @@ public class PuzzleWord : MonoBehaviour
         
         
 
-       if (GroqTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
+        if (GroqTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
         {
             GroqTTS.Instance.Speak(audioPrompt);
         }
-       if (ElevenlabsTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
-       {
-           ElevenlabsTTS.Instance.Speak(audioPrompt);
-       }
+        //if (ElevenlabsTTS.Instance != null && !string.IsNullOrEmpty(audioPrompt))
+        //{
+        //     ElevenlabsTTS.Instance.Speak(audioPrompt);
+        // }
 
-       SpeechValidator.Instance.ListenForWord(word, OnValidationResult);
+        SpeechValidator.Instance.ListenForWord(word, OnValidationResult);
     }
 
     void OnValidationResult(bool isCorrect)
     {
         if (isCorrect && !isValidated)
         {
-            UIManager.Instance.ShowWordPopup(word);
+            // UIManager.Instance.ShowWordPopup(word);
             isValidated = true;
             OnWordValidated?.Invoke(this);
         }

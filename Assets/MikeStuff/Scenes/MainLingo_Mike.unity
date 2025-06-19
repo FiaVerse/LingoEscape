@@ -7330,8 +7330,10 @@ GameObject:
   - component: {fileID: 537111135}
   - component: {fileID: 537111136}
   - component: {fileID: 537111137}
+  - component: {fileID: 537111138}
+  - component: {fileID: 537111139}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: UVPuzzleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7521,9 +7523,12 @@ MonoBehaviour:
   m_whisperSTT: {fileID: 22697184}
   m_blacklightController: {fileID: 537111133}
   m_sceneLightManager: {fileID: 537111137}
+  m_sceneLightsToggleController: {fileID: 537111139}
   m_blacklightKeyword: blacklight
   m_brightnessUpKeyword: brightness up
   m_brightnessDownKeyword: brightness down
+  m_flashlightKeyword: flashlight
+  m_toggleLightsKeyword: basement lights
 --- !u!114 &537111137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7539,6 +7544,34 @@ MonoBehaviour:
   brightnessStep: 0.2
   minBrightnessMultiplier: 0.1
   maxBrightnessMultiplier: 2
+--- !u!114 &537111138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537111126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29717f4e820e714889b7615cfd321a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_flashlightPrefab: {fileID: 6978289762261176771, guid: 6de66d14d990e314e876a2182d8864ac, type: 3}
+  m_surfaceOffset: 0.02
+--- !u!114 &537111139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537111126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ce181c3ea2f13458c96558ed389f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_passthroughLayer: {fileID: 1525504066}
+  m_darknessLevel: -0.9
 --- !u!1 &544713856
 GameObject:
   m_ObjectHideFlags: 0
@@ -21642,11 +21675,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnOnStart: 1
-  MeshMaterial: {fileID: 2100000, guid: 599b01c5f1d17436c89b88cc04257314, type: 2}
+  MeshMaterial: {fileID: 2100000, guid: 69e54be2e702f984683fa4816dc4b0f8, type: 2}
   Colliders: 1
   CutHoles: 0
   castShadows: 1
-  hideMesh: 1
+  hideMesh: 0
   Layer: 0
   textureCoordinateModes:
   - WallU: 5

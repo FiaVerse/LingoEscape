@@ -68,11 +68,16 @@ public class SceneLightManager : MonoBehaviour
     {
         if (m_sceneLights == null) return;
 
-        // Loop through all the lights and set their intensity relative to their original value
         for (int i = 0; i < m_sceneLights.Count; i++)
         {
             if (m_sceneLights[i] != null)
             {
+                // ADD THIS CHECK: If the light has the "Flashlight" tag, skip it.
+                if (m_sceneLights[i].CompareTag("Flashlight"))
+                {
+                    continue; // Skips to the next light in the loop
+                }
+
                 m_sceneLights[i].intensity = m_originalIntensities[i] * m_currentBrightnessMultiplier;
             }
         }

@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainLingo.unity
     guid: 74235435cf1f22c469dfd8ccad5bcace
   - enabled: 0
     path: Assets/Scenes/StartMenu.unity
     guid: 0ab56cfc4e70d994c8a35cb8d09c80ad
+  - enabled: 1
+    path: Assets/portalQuiz_03.unity
+    guid: 5ae6e1a34b7aa804b9af7b6dd6b50073
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: e952b31827778d34e8bd2662bb6e4806, type: 2}

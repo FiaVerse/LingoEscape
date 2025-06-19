@@ -8,21 +8,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6133835253759647878, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6133835253759647878, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.000000025158293
+      objectReference: {fileID: 0}
+    - target: {fileID: -6133835253759647878, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6133835253759647878, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.000000025158293
+      objectReference: {fileID: 0}
+    - target: {fileID: -6133835253759647878, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.000000025158293
+      objectReference: {fileID: 0}
+    - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.000000025158293
+      objectReference: {fileID: 0}
+    - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8128668236925612103, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_Name
       value: RobotPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_LocalPosition.x

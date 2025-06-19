@@ -1,0 +1,11 @@
+Model Information:
+* title:	Hex Tile (Low Poly)
+* source:	https://sketchfab.com/3d-models/hex-tile-low-poly-6dacd58ceb8b4eb5aa12ee79913acf20
+* author:	Leonardo Carvalho (https://sketchfab.com/livrosparacriancas)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Hex Tile (Low Poly)" (https://sketchfab.com/3d-models/hex-tile-low-poly-6dacd58ceb8b4eb5aa12ee79913acf20) by Leonardo Carvalho (https://sketchfab.com/livrosparacriancas) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

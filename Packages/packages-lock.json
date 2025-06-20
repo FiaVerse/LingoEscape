@@ -95,6 +95,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.poppod56.radialuicontroller": {
+      "version": "https://github.com/poppod56/RadialUIController.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "659e97f043fbb143f08c0e55eac7e8857038c9dd"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

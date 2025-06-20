@@ -1,56 +1,66 @@
 // BlacklightClue.cs
-// This script now actively registers itself with the BlacklightController when it's created.
+// This script now uses physics triggers to reveal a hidden object
+// only when the flashlight beam is pointed at it.
 
 using UnityEngine;
 
+// This ensures the GameObject has a Collider component to work with triggers.
+[RequireComponent(typeof(Collider))]
 public class BlacklightClue : MonoBehaviour
 {
+    [Tooltip("The actual GameObject with the clue's visuals that will be enabled/disabled.")]
     [SerializeField]
-    [Tooltip("The actual GameObject with the clue's visuals. This will be enabled/disabled.")]
     private GameObject m_clueObject;
-
-    void OnEnable()
-    {
-        // When this clue object is created and enabled, find the BlacklightController instance
-        // and register this clue with it.
-        if (BlacklightController.Instance != null)
-        {
-            BlacklightController.Instance.RegisterClue(this);
-        }
-    }
-
-    void OnDisable()
-    {
-        // When this clue object is about to be destroyed or disabled, unregister it
-        // from the controller to keep the list clean.
-        if (BlacklightController.Instance != null)
-        {
-            BlacklightController.Instance.UnregisterClue(this);
-        }
-    }
 
     void Awake()
     {
-        // Ensure the clue is hidden by default when it is first created.
+        // Ensure the clue is hidden at the start.
         if (m_clueObject != null)
         {
             m_clueObject.SetActive(false);
         }
-        else
+
+        // IMPORTANT: Make sure the collider on this object is set to be a trigger
+        // so it can detect other triggers entering its space without causing a physical collision.
+        GetComponent<Collider>().isTrigger = true;
+    }
+
+    // This function is called automatically by Unity when another trigger collider enters this one.
+    private void OnTriggerEnter(Collider other)
+    {
+        // We check if the object that entered our trigger is the flashlight beam.
+        // We identify the beam by its "FlashlightBeam" tag.
+        if (other.CompareTag("FlashlightBeam"))
         {
-            Debug.LogWarning("BlacklightClue: No 'clueObject' has been assigned!", this);
+            Reveal();
         }
     }
 
-    /// <summary>
-    /// Shows or hides the clue. Called by the BlacklightController.
-    /// </summary>
-    /// <param name="isRevealed">If true, show the clue. Otherwise, hide it.</param>
-    public void SetRevealed(bool isRevealed)
+    // This function is called automatically by Unity when the other trigger collider exits.
+    private void OnTriggerExit(Collider other)
+    {
+        // If the flashlight beam moves away, we hide the clue again.
+        if (other.CompareTag("FlashlightBeam"))
+        {
+            Hide();
+        }
+    }
+
+    private void Reveal()
     {
         if (m_clueObject != null)
         {
-            m_clueObject.SetActive(isRevealed);
+            m_clueObject.SetActive(true);
+            Debug.Log($"Clue '{gameObject.name}' is being revealed.");
+        }
+    }
+
+    private void Hide()
+    {
+        if (m_clueObject != null)
+        {
+            m_clueObject.SetActive(false);
+            Debug.Log($"Clue '{gameObject.name}' is being hidden.");
         }
     }
 }

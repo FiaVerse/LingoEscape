@@ -123,7 +123,7 @@ public class BlacklightController : MonoBehaviour
             if (clue != null)
             {
                 Debug.Log($"  -> Setting clue '{clue.gameObject.name}' to active state: {isOn}", clue.gameObject);
-                clue.SetRevealed(isOn);
+                //clue.SetRevealed(isOn);
             }
         }
     }

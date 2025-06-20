@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8287209502562926304, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6133835253759647878, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -28,6 +32,18 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5644133064174452605, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6a0f7926faa28f547912c9b72c9b267a, type: 2}
+    - target: {fileID: -5644133064174452605, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5644133064174452605, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -46,6 +62,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4846732559040332737, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
       propertyPath: m_AABB.m_Extent.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3964666550869987694, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036499434884066948, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7223906337144281324, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8128668236925612103, guid: addfc84acef2eb142bb08e4721abd95e, type: 3}

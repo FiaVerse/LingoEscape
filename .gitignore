@@ -73,3 +73,9 @@ crashlytics-build.properties
 
 # Security
 /Assets/Resources/api_keys.json
+
+# Nova Package
+Nova/
+NovaAssets/
+NovaUI/
+Nova_*
